@@ -1,1 +1,1 @@
-# DnD-pal
+# Final project for Developers.Institute
