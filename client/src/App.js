@@ -1,16 +1,27 @@
 import React from "react";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import Home from "./components/Home";
+import Character from "./components/Character";
+import Resources from "./components/Resources";
+import NotFound from "./components/NotFound";
+import Login from "./components/Login";
+import Register from "./components/Register";
 import "./App.css";
-import Navigation from "./components/Navigation";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
 import Footer from "./components/Footer";
 
 function App() {
   return (
     <div className="App">
-      <Navigation />
+      <BrowserRouter>
+        <Routes>
+          <Route path="*" element={<NotFound />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/character" element={<Character />} />
+          <Route path="/resources" element={<Resources />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </BrowserRouter>
       <Footer />
     </div>
   );

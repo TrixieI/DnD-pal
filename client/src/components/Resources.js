@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import Navigation from "./Navigation";
 
 class Resources extends React.Component {
   constructor() {
@@ -7,6 +8,7 @@ class Resources extends React.Component {
     this.state = {
       classes: [],
       class: "",
+      info: [],
     };
   }
 
@@ -20,23 +22,23 @@ class Resources extends React.Component {
   };
 
   handleClass = async (e) => {
-    this.setState({ class: e.target.id });
-    console.log(this.state.class);
-
+    const hero = e.target.value;
+    this.setState({ class: hero });
     try {
       const grab = await axios.get(
         `https://www.dnd5eapi.co/api/classes/${this.state.class}`
       );
-      console.log(grab);
+      this.setState({ info: grab.data });
+      console.log(this.state.info);
     } catch (error) {
       console.log(error);
     }
   };
 
   render() {
-    console.log(this.state.classes);
     return (
       <div>
+        <Navigation />
         <h1>Resources page</h1>
         <div className="information"></div>
         <div>
@@ -55,6 +57,12 @@ class Resources extends React.Component {
               </button>
             );
           })}
+          <div>
+            {}
+            <h2>{this.state.info.name}</h2>
+            <p>Hit die: {this.state.info.hit_die}</p>
+            <p>Proficiencies:</p>
+          </div>
         </div>
       </div>
     );

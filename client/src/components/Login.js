@@ -29,6 +29,7 @@ class Login extends React.Component {
     if (data.data.isLoggedin === true) {
       this.setState({ isLoggedin: true });
       this.props.login(this.state.isLoggedin);
+      window.location.replace("http://localhost:3000/home");
     }
   };
 

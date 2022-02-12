@@ -47,7 +47,7 @@ class Register extends React.Component {
           <button onClick={this.handleRegister}>Register</button>
           <p>
             Already have an account?
-            <a href="/login">Click HERE to Login</a>
+            <a href="/">Click HERE to Login</a>
           </p>
         </div>
       </>

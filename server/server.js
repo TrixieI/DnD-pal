@@ -4,7 +4,7 @@ const env = require("dotenv");
 const knex = require("knex");
 const path = require("path");
 const bcrypt = require("bcryptjs");
-const { default: axios } = require("axios");
+const axios = require("axios");
 const app = express();
 env.config();
 const port = process.env.PORT;
@@ -34,7 +34,6 @@ app.post("/register", async (req, res) => {
     .where("username", username);
   if (exists.length > 0) {
     res.json({ msg: "User already exists!" });
-    console.log("User already exists!");
     return;
   }
 
@@ -54,19 +53,26 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-  console.log(password);
-  const exists = await db("characters")
-    .select("password")
+  const userExists = await db("characters")
+    .select("username")
     .where("username", username);
-  const passHash = bcrypt.compareSync(password, exists[0].password);
-  console.log(exists);
-  if (passHash) {
-    console.log("Logged in, password matches!");
-    res.json({ isLoggedin: true });
-    return;
+  console.log(userExists);
+  if (userExists.length <= 0) {
+    res.json({ msg: "Username doesn't exist!" });
+    console.log("user doesn't exist");
   } else {
-    console.log("Incorrect username or password!");
-    res.json({ isLoggedin: false });
+    const userPassword = await db("characters")
+      .select("password")
+      .where("username", username);
+    const passHash = bcrypt.compareSync(password, userPassword[0]?.password);
+    if (userExists[0]?.username === undefined) {
+      res.json({ msg: "Sorry, this username does not exist" });
+      console.log("Username doesn't exist");
+    } else if (passHash && username === userExists[0].username) {
+      res.json({ isLoggedin: true });
+      return;
+    } else res.json({ msg: "Sorry, incorrect password!" });
+    console.log("incorrect password");
     return;
   }
 });
