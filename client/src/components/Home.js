@@ -1,13 +1,15 @@
 import Navigation from "./Navigation";
 
 const Home = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+
   return (
     <div>
       <Navigation />
       <div className="home">
-        <h1>Welcome to D&D PAL Adventurer!</h1>
+        <h1>Welcome to D&D PAL {user ? user : "Adventurer"}</h1>
         <p>
-          D&D PAL3 is a helper site for D&D 5e, we use the official 5th edition
+          D&D PAL is a helper site for D&D 5e, we use the official 5th edition
           API to get you all the information you need to help you on your next
           adventure!
         </p>

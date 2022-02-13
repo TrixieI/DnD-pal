@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { login } from "../actions";
+import { Alert } from "react-bootstrap";
 
 class Login extends React.Component {
   constructor() {
@@ -10,6 +11,9 @@ class Login extends React.Component {
       username: "",
       password: "",
       isLoggedin: false,
+      exists: null,
+      incorrectPassword: null,
+      name: "",
     };
   }
 
@@ -26,10 +30,18 @@ class Login extends React.Component {
       username: this.state.username,
       password: this.state.password,
     });
+    console.log(data);
     if (data.data.isLoggedin === true) {
       this.setState({ isLoggedin: true });
       this.props.login(this.state.isLoggedin);
-      window.location.replace("http://localhost:3000/home");
+      const user = data.data.user;
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("isAuthenticated", true);
+      setTimeout(() => {
+        window.location.replace("http://localhost:3000/home");
+      }, 1000);
+    } else if (data.data.exists === false) {
+      this.setState({ exists: false });
     }
   };
 
@@ -57,6 +69,12 @@ class Login extends React.Component {
             Don't have an account?
             <a href="/register">Click HERE to Register</a>
           </p>
+          {this.state.exists === false ? (
+            <Alert variant={"danger"}>Username doesn't exist!</Alert>
+          ) : null}
+          {this.state.isLoggedin === true ? (
+            <Alert variant={"success"}>Login successful!</Alert>
+          ) : null}
         </div>
       </>
     );

@@ -1,12 +1,14 @@
 import React from "react";
 import axios from "axios";
-
+import { Alert } from "react-bootstrap";
 class Register extends React.Component {
   constructor() {
     super();
     this.state = {
       username: "",
       password: "",
+      exists: null,
+      created: null,
     };
   }
 
@@ -18,11 +20,16 @@ class Register extends React.Component {
     this.setState({ password: e.target.value });
   };
 
-  handleRegister = () => {
-    axios.post("http://localhost:3001/register", {
+  handleRegister = async () => {
+    const data = await axios.post("http://localhost:3001/register", {
       username: this.state.username,
       password: this.state.password,
     });
+    if (data.data.exists === true) {
+      this.setState({ exists: true });
+    } else if (data.data.created === true) {
+      this.setState({ created: true });
+    }
   };
 
   render() {
@@ -49,6 +56,12 @@ class Register extends React.Component {
             Already have an account?
             <a href="/">Click HERE to Login</a>
           </p>
+          {this.state.exists === true ? (
+            <Alert variant={"warning"}>User already exists!</Alert>
+          ) : null}
+          {this.state.created === true ? (
+            <Alert variant={"success"}>Success! user created!</Alert>
+          ) : null}
         </div>
       </>
     );

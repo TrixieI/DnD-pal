@@ -33,7 +33,7 @@ app.post("/register", async (req, res) => {
     .select("username")
     .where("username", username);
   if (exists.length > 0) {
-    res.json({ msg: "User already exists!" });
+    res.json({ exists: true });
     return;
   }
 
@@ -46,7 +46,7 @@ app.post("/register", async (req, res) => {
       password: passHash,
     })
     .then((data) => console.log(data));
-  res.json({ msg: "OK" });
+  res.json({ created: true });
   return;
 });
 
@@ -56,10 +56,8 @@ app.post("/login", async (req, res) => {
   const userExists = await db("characters")
     .select("username")
     .where("username", username);
-  console.log(userExists);
   if (userExists.length <= 0) {
-    res.json({ msg: "Username doesn't exist!" });
-    console.log("user doesn't exist");
+    res.json({ exists: false });
   } else {
     const userPassword = await db("characters")
       .select("password")
@@ -69,7 +67,7 @@ app.post("/login", async (req, res) => {
       res.json({ msg: "Sorry, this username does not exist" });
       console.log("Username doesn't exist");
     } else if (passHash && username === userExists[0].username) {
-      res.json({ isLoggedin: true });
+      res.json({ isLoggedin: true, user: username });
       return;
     } else res.json({ msg: "Sorry, incorrect password!" });
     console.log("incorrect password");

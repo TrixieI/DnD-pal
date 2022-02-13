@@ -20,3 +20,70 @@ body {
   height: 40px;
   background: rgb(53, 53, 53);
 }
+
+.btn {
+  width: 150px;
+  height: 50px;
+  font-size: 1.1em;
+  cursor: pointer;
+  background-color: #171717;
+  color: #fff;
+  border-radius: 5px;
+  margin: 2px;
+}
+
+.btn:hover {
+  color: gold;
+}
+
+.btn2 {
+  font-size: 18px;
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  margin: 2px;
+  background: red;
+  padding: 0 2em;
+  border-radius: 0.3em;
+  color: #fff;
+  height: 2em;
+  text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
+  border: 1px solid black;
+}
+
+.btn3 {
+  font-size: 18px;
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  background: blue;
+  padding: 0 2em;
+  border-radius: 0.3em;
+  color: #fff;
+  height: 2em;
+  text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  border: 1px solid black;
+}
+
+.info {
+  background-color: rgb(40, 38, 38);
+  opacity: 0.97;
+  min-height: calc(70vh - 70px);
+  margin-bottom: 100px;
+}
+
+.btn4 {
+  width: 150px;
+  height: 50px;
+  font-size: 1.1em;
+  cursor: pointer;
+  background-color: #28cd3b;
+  color: #fff;
+  border-radius: 5px;
+  margin: 2px;
+}
+
+.btn4:hover {
+  color: gold;
+}

@@ -3,7 +3,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { connect } from "react-redux";
 
 const Navigation = (props) => {
-  const handleLogout = () => {};
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("isAuthenticated");
+  };
 
   return (
     <div style={{ textAlign: "center" }} className="App">
