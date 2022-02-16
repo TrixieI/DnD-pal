@@ -1,6 +1,9 @@
 import Navigation from "./Navigation";
 import React from "react";
 import axios from "axios";
+import Upload from "./Upload";
+import { connect } from "react-redux";
+import { increase, decrease } from "../actions/index";
 
 class Character extends React.Component {
   constructor() {
@@ -41,6 +44,7 @@ class Character extends React.Component {
 
   handleDeleteCharacter = () => {
     localStorage.removeItem("hero");
+    localStorage.removeItem("avatar");
     document.location.reload();
   };
 
@@ -48,7 +52,7 @@ class Character extends React.Component {
     const hero = JSON.parse(localStorage.getItem("hero"));
 
     return (
-      <div>
+      <div className="info">
         <Navigation />
         <div>
           <h1>Character Creator</h1>
@@ -71,14 +75,27 @@ class Character extends React.Component {
           </select>
           <br></br>
           <button className="btn3" type="submit" onClick={this.handleCreate}>
-            Create
+            {hero ? "Edit" : "Create"}
           </button>
           <div>
             {hero ? (
               <div>
+                <Upload />
                 <h3>Name: {hero.name}</h3>
                 <h3>Class: {hero.class}</h3>
                 <h3>Level: {hero.level}</h3>
+                <button
+                  onClick={() => this.props.myIncrease(this.props.counter)}
+                >
+                  +
+                </button>
+                <h4>Current health points: {this.props.counter}</h4>
+
+                <button
+                  onClick={() => this.props.myDecrease(this.props.counter)}
+                >
+                  -
+                </button>
               </div>
             ) : (
               <div></div>
@@ -97,4 +114,17 @@ class Character extends React.Component {
   }
 }
 
-export default Character;
+const mapStateToProps = (state) => {
+  return {
+    counter: state.counter,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    myIncrease: (count) => dispatch(increase(count)),
+    myDecrease: (count) => dispatch(decrease(count)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Character);

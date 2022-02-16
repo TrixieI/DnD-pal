@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Alert } from "react-bootstrap";
+
 class Register extends React.Component {
   constructor() {
     super();

@@ -11,9 +11,8 @@ import Footer from "./components/Footer";
 
 function App() {
   const isAuthenticated = localStorage.getItem("isAuthenticated");
-  console.log(isAuthenticated);
   return (
-    <div className="App">
+    <div className="absolute-bg">
       <BrowserRouter>
         <Routes>
           <Route path="*" element={<NotFound />} />
