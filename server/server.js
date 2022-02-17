@@ -81,19 +81,23 @@ app.post("/login", async (req, res) => {
 
 // Image Upload
 app.post("/image", imageUpload.single("image"), (req, res) => {
-  const { filename, mimetype, size } = req.file;
-  const filepath = req.file.path;
-  db.insert({
-    filename,
-    filepath,
-    mimetype,
-    size,
-  })
-    .into("image_files")
-    .then(() => res.json({ success: true, filename }))
-    .catch((err) =>
-      res.json({ success: false, message: "upload failed", stack: err.stack })
-    );
+  try {
+    const { filename, mimetype, size } = req.file;
+    const filepath = req.file.path;
+    db.insert({
+      filename,
+      filepath,
+      mimetype,
+      size,
+    })
+      .into("image_files")
+      .then(() => res.json({ success: true, filename }))
+      .catch((err) =>
+        res.json({ success: false, message: "upload failed", stack: err.stack })
+      );
+  } catch (e) {
+    console.log(e);
+  }
 });
 // Image Get
 app.get("/image/:filename", (req, res) => {

@@ -28,10 +28,9 @@ const Upload = () => {
     setImage(img);
     notify();
   };
-  const notify = () => toast("Nice hero!");
+  const notify = () => toast("Hero avatar selected, please submit to upload!");
 
   const avatar = JSON.parse(localStorage.getItem("avatar"));
-
   return (
     <div className="App">
       <h4>Hero avatar</h4>
@@ -43,11 +42,15 @@ const Upload = () => {
       {status && <h4>{status}</h4>}
       <div>
         <ToastContainer />
-        <img
-          style={{ width: "400px", height: "400px" }}
-          src={`http://localhost:3001/image/${avatar}`}
-          alt="hero"
-        />
+        {avatar !== undefined ? (
+          <img
+            style={{ width: "400px", height: "400px" }}
+            src={`http://localhost:3001/image/${avatar}`}
+            alt="hero"
+          />
+        ) : (
+          <p>No avatar</p>
+        )}
       </div>
     </div>
   );

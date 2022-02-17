@@ -13,7 +13,9 @@ class Character extends React.Component {
       name: "",
       class: "",
       level: null,
-      levels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      levels: ["N/A", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      alignment: [],
+      selectedAlignment: "",
     };
   }
 
@@ -21,6 +23,8 @@ class Character extends React.Component {
     try {
       const grab = await axios.get("https://www.dnd5eapi.co/api/classes");
       this.setState({ classes: grab.data.results });
+      const grab2 = await axios.get("https://www.dnd5eapi.co/api/alignments");
+      this.setState({ alignment: grab2.data.results });
     } catch (error) {
       console.log(error);
     }
@@ -37,6 +41,7 @@ class Character extends React.Component {
       name: this.state.name,
       class: this.state.class,
       level: this.state.level,
+      alignment: this.state.selectedAlignment,
     };
     localStorage.setItem("hero", JSON.stringify(user));
     document.location.reload();
@@ -74,6 +79,14 @@ class Character extends React.Component {
             })}
           </select>
           <br></br>
+          Alignment:
+          <select name="selectedAlignment" onChange={this.handleHero}>
+            <option>N/A</option>
+            {this.state.alignment.map((item, i) => {
+              return <option key={i}>{item.name}</option>;
+            })}
+          </select>
+          <br></br>
           <button className="btn3" type="submit" onClick={this.handleCreate}>
             {hero ? "Edit" : "Create"}
           </button>
@@ -84,6 +97,7 @@ class Character extends React.Component {
                 <h3>Name: {hero.name}</h3>
                 <h3>Class: {hero.class}</h3>
                 <h3>Level: {hero.level}</h3>
+                <h3>Alignment: {hero.alignment}</h3>
                 <button
                   onClick={() => this.props.myIncrease(this.props.counter)}
                 >
