@@ -4,12 +4,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Upload = () => {
   const [image, setImage] = useState({ preview: "", data: "" });
-  const [status, setStatus] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
     let formData = new FormData();
     formData.append("image", image.data);
-    const response = await fetch("http://localhost:3001/image", {
+    await fetch("http://localhost:3001/image", {
       method: "POST",
       body: formData,
     })
@@ -39,7 +38,7 @@ const Upload = () => {
         <input type="file" name="image" onChange={handleFileChange}></input>
         <button type="submit">Submit</button>
       </form>
-      {status && <h4>{status}</h4>}
+
       <div>
         <ToastContainer />
         {avatar !== undefined ? (

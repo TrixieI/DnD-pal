@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Button, Modal } from "react-bootstrap";
 
 export default class Spells extends Component {
   constructor() {
@@ -7,8 +8,9 @@ export default class Spells extends Component {
     this.state = {
       spellsList: [],
       spell: ``,
-      selectedSpell: "",
+      selectedSpell: [],
       text: "",
+      isOpen: false,
     };
   }
   async componentDidMount() {
@@ -20,12 +22,16 @@ export default class Spells extends Component {
     this.setState({ text: e.target.value });
   };
 
-  handleWhatis = async () => {
-    const whatis = await axios(
-      `https://www.dnd5eapi.co/api/rule-sections/what-is-a-spell`
+  handleSelectedSpell = async (e) => {
+    const spell = await axios(
+      `https://www.dnd5eapi.co/api/spells/${e.target.value}`
     );
-    this.setState({ whatis: whatis.data.desc });
+    this.setState({ selectedSpell: spell.data });
+    this.openModal();
   };
+
+  openModal = () => this.setState({ isOpen: true });
+  closeModal = () => this.setState({ isOpen: false });
 
   render() {
     return (
@@ -50,30 +56,37 @@ export default class Spells extends Component {
           .map((item, i) => {
             return (
               <button
+                key={i}
                 className="btn3"
                 value={item.index}
-                style={{ fontSize: "20px", cursor: "pointer", margin: "10px" }}
-                onClick={this.handleSpell}
-                key={i}
+                style={{
+                  fontSize: "20px",
+                  cursor: "pointer",
+                  margin: "10px",
+                }}
+                onClick={this.handleSelectedSpell}
               >
                 {item.name}
               </button>
             );
           })}
-
-        {/* {this.state.spellsList.map((item, i) => {
-          return (
-            <button
-              className="btn3"
-              value={item.index}
-              style={{ fontSize: "20px", cursor: "pointer", margin: "10px" }}
-              onClick={this.handleSpell}
-              key={i}
-            >
-              {item.name}
-            </button>
-          );
-        })} */}
+        {
+          <Modal show={this.state.isOpen} onHide={this.closeModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>{this.state.selectedSpell.name}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>Casting time: {this.state.selectedSpell.casting_time}</p>
+              <h4>Spell description:</h4>
+              <p>{this.state.selectedSpell.desc}</p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={this.closeModal}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        }
       </div>
     );
   }

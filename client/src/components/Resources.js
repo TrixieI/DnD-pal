@@ -6,6 +6,7 @@ import Environment from "./Environment";
 import Abilitychecks from "./Abilitychecks";
 import Abilityscore from "./Abilityscores";
 import Spells from "./Spells";
+import Traits from "./Traits";
 
 class Resources extends React.Component {
   constructor() {
@@ -17,6 +18,7 @@ class Resources extends React.Component {
       ability: false,
       abilityscores: false,
       spells: false,
+      traits: false,
     };
   }
 
@@ -52,6 +54,11 @@ class Resources extends React.Component {
       spells: !prevState.spells,
     }));
   };
+  handleTraits = () => {
+    this.setState((prevState) => ({
+      traits: !prevState.traits,
+    }));
+  };
 
   render() {
     return (
@@ -78,6 +85,9 @@ class Resources extends React.Component {
           <button className="btn" onClick={this.handleSpells}>
             Spells
           </button>
+          <button className="btn" onClick={this.handleTraits}>
+            Traits
+          </button>
           <br></br>
 
           {this.state.spellcasting === true ? <Spellcasting /> : null}
@@ -86,6 +96,7 @@ class Resources extends React.Component {
           {this.state.ability === true ? <Abilitychecks /> : null}
           {this.state.abilityscores === true ? <Abilityscore /> : null}
           {this.state.spells === true ? <Spells /> : null}
+          {this.state.traits === true ? <Traits /> : null}
         </div>
       </div>
     );

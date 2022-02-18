@@ -8,6 +8,7 @@ export default class Classes extends Component {
       classes: [],
       class: "",
       info: [],
+      spellCasting: [],
     };
   }
   async componentDidMount() {
@@ -26,8 +27,9 @@ export default class Classes extends Component {
         `https://www.dnd5eapi.co/api/classes/${hero}`
       );
       this.setState({ info: grab.data });
+      this.setState({ spellCasting: grab.data.spellcasting.info });
 
-      console.log(this.state.info);
+      console.log(this.state.spellCasting);
     } catch (error) {
       console.log(error);
     }
@@ -74,6 +76,12 @@ export default class Classes extends Component {
                       {item.name}
                     </button>
                   );
+                })
+              : null}
+            <p>Spell Casting: </p>
+            {this.state.spellCasting.length > 0
+              ? this.state.spellCasting.map((item, i) => {
+                  return <p key={i}>{item.desc}</p>;
                 })
               : null}
             <p>Subclass:</p>
