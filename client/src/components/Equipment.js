@@ -2,31 +2,31 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
 
-export default class Spells extends Component {
+export default class Equipment extends Component {
   constructor() {
     super();
     this.state = {
-      spellsList: [],
-      spell: ``,
-      selectedSpell: [],
+      equipmentList: [],
+      equipment: ``,
       text: "",
+      selectedEquipment: [],
       isOpen: false,
     };
   }
   async componentDidMount() {
-    const data = await axios(`https://www.dnd5eapi.co/api/spells/`);
-    this.setState({ spellsList: data.data.results });
+    const data = await axios(`https://www.dnd5eapi.co/api/equipment/`);
+    this.setState({ equipmentList: data.data.results });
   }
 
   handleChange = (e) => {
     this.setState({ text: e.target.value });
   };
 
-  handleSelectedSpell = async (e) => {
-    const spell = await axios(
-      `https://www.dnd5eapi.co/api/spells/${e.target.value}`
+  handleSelectedEquipment = async (e) => {
+    const equipment = await axios(
+      `https://www.dnd5eapi.co/api/equipment/${e.target.value}`
     );
-    this.setState({ selectedSpell: spell.data });
+    this.setState({ selectedEquipment: equipment.data });
     this.openModal();
   };
 
@@ -40,10 +40,10 @@ export default class Spells extends Component {
           <input
             onChange={this.handleChange}
             type="text"
-            placeholder="Search spells"
+            placeholder="Search equipment"
           />
         </div>
-        {this.state.spellsList
+        {this.state.equipmentList
           // eslint-disable-next-line array-callback-return
           .filter((val) => {
             if (this.state.text === "") {
@@ -65,7 +65,7 @@ export default class Spells extends Component {
                   cursor: "pointer",
                   margin: "10px",
                 }}
-                onClick={this.handleSelectedSpell}
+                onClick={this.handleSelectedEquipment}
               >
                 {item.name}
               </button>
@@ -74,12 +74,10 @@ export default class Spells extends Component {
         {
           <Modal show={this.state.isOpen} onHide={this.closeModal}>
             <Modal.Header closeButton>
-              <Modal.Title>{this.state.selectedSpell.name}</Modal.Title>
+              <Modal.Title>{this.state.selectedEquipment.name}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <p>Casting time: {this.state.selectedSpell.casting_time}</p>
-              <h4>Spell description:</h4>
-              <p>{this.state.selectedSpell.desc}</p>
+              <p>{this.state.selectedEquipment.desc}</p>
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={this.closeModal}>
