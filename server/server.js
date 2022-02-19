@@ -6,6 +6,7 @@ const path = require("path");
 const bcrypt = require("bcryptjs");
 const multer = require("multer");
 const morgan = require("morgan");
+const fs = require("fs");
 const app = express();
 env.config();
 const port = process.env.PORT;
@@ -113,6 +114,31 @@ app.get("/image/:filename", (req, res) => {
       }
       return Promise.reject(new Error("Image does not exist"));
     })
+    .catch((err) =>
+      res
+        .status(404)
+        .json({ success: false, message: "not found", stack: err.stack })
+    );
+});
+
+app.post("/image/:filename", (req, res) => {
+  const { filename } = req.params;
+  console.log(filename);
+  db.select("filename")
+    .from("image_files")
+    .where({ filename })
+    .del()
+    .then((images) => {
+      if (filename) {
+        console.log("finally");
+        const fullfilepath = `./images/${filename}`;
+        fs.unlinkSync(fullfilepath);
+
+        console.log(fullfilepath + "removed?");
+      }
+      res.json({ msg: "removed successfully" });
+    })
+
     .catch((err) =>
       res
         .status(404)

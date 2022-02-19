@@ -36,6 +36,7 @@ export default class Spells extends Component {
   render() {
     return (
       <div className="info">
+        <h1>Spells</h1>
         <div>
           <input
             onChange={this.handleChange}

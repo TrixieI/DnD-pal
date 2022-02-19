@@ -32,6 +32,7 @@ export default class Spellcasting extends Component {
   render() {
     return (
       <div className="info">
+        <h1>Spell Casting:</h1>
         <p>{this.state.desc}</p>
         <button onClick={this.handleWhatis} className="btn">
           What is a spell:

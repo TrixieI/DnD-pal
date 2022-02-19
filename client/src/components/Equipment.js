@@ -37,6 +37,7 @@ export default class Equipment extends Component {
     return (
       <div className="info">
         <div>
+          <h1>Equipment</h1>
           <input
             onChange={this.handleChange}
             type="text"

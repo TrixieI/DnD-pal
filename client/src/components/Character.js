@@ -47,7 +47,11 @@ class Character extends React.Component {
     document.location.reload();
   };
 
-  handleDeleteCharacter = () => {
+  handleDeleteCharacter = async () => {
+    const avatar = JSON.parse(localStorage.getItem("avatar"));
+    console.log(avatar);
+    const grab = await axios.post(`http://localhost:3001/image/${avatar}`);
+    console.log(grab);
     localStorage.removeItem("hero");
     localStorage.removeItem("avatar");
     document.location.reload();
