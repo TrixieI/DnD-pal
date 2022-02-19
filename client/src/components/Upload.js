@@ -41,14 +41,14 @@ const Upload = () => {
 
       <div>
         <ToastContainer />
-        {avatar !== undefined ? (
+        {avatar !== null ? (
           <img
             style={{ width: "400px", height: "400px" }}
             src={`http://localhost:3001/image/${avatar}`}
             alt="hero"
           />
         ) : (
-          <p>No avatar</p>
+          <p>No avatar image uploaded</p>
         )}
       </div>
     </div>

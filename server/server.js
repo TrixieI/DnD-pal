@@ -133,18 +133,14 @@ app.get("/image/:filename", (req, res) => {
 
 app.post("/image/:filename", (req, res) => {
   const { filename } = req.params;
-  console.log(filename);
   db.select("filename")
     .from("image_files")
     .where({ filename })
     .del()
     .then((images) => {
       if (filename) {
-        console.log("finally");
         const fullfilepath = `./images/${filename}`;
         fs.unlinkSync(fullfilepath);
-
-        console.log(fullfilepath + "removed?");
       }
       res.json({ msg: "removed successfully" });
     })
