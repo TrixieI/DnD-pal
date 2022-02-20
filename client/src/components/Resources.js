@@ -9,6 +9,7 @@ import Spells from "./Spells";
 import Traits from "./Traits";
 import Equipment from "./Equipment";
 import Languages from "./Languages";
+import Monsters from "./Monsters";
 
 class Resources extends React.Component {
   constructor() {
@@ -23,6 +24,7 @@ class Resources extends React.Component {
       traits: false,
       equipment: false,
       languages: false,
+      monsters: false,
     };
   }
 
@@ -73,6 +75,11 @@ class Resources extends React.Component {
       languages: !prevState.languages,
     }));
   };
+  handleMonsters = () => {
+    this.setState((prevState) => ({
+      monsters: !prevState.monsters,
+    }));
+  };
 
   render() {
     return (
@@ -108,6 +115,9 @@ class Resources extends React.Component {
           <button className="btn" onClick={this.handleLanguages}>
             Languages
           </button>
+          <button className="btn" onClick={this.handleMonsters}>
+            Monsters
+          </button>
           <br></br>
 
           {this.state.spellcasting === true ? <Spellcasting /> : null}
@@ -119,6 +129,7 @@ class Resources extends React.Component {
           {this.state.traits === true ? <Traits /> : null}
           {this.state.equipment === true ? <Equipment /> : null}
           {this.state.languages === true ? <Languages /> : null}
+          {this.state.monsters === true ? <Monsters /> : null}
         </div>
       </div>
     );

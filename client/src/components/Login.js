@@ -70,10 +70,14 @@ class Login extends React.Component {
             <a href="/register">Click HERE to Register</a>
           </p>
           {this.state.exists === false ? (
-            <Alert variant={"danger"}>Username doesn't exist!</Alert>
+            <Alert variant={"danger"}>
+              Incorrect username or password! please try again...
+            </Alert>
           ) : null}
           {this.state.isLoggedin === true ? (
-            <Alert variant={"success"}>Login successful!</Alert>
+            <Alert variant={"success"}>
+              Login successful! logging you in...
+            </Alert>
           ) : null}
         </div>
       </>

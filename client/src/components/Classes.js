@@ -28,8 +28,6 @@ export default class Classes extends Component {
       );
       this.setState({ info: grab.data });
       this.setState({ spellCasting: grab.data.spellcasting.info });
-
-      console.log(this.state.spellCasting);
     } catch (error) {
       console.log(error);
     }

@@ -40,6 +40,7 @@ const db = knex({
     database: process.env.DATABASEDB,
   },
 });
+
 // Registration
 app.post("/register", async (req, res) => {
   const username = req.body.username;

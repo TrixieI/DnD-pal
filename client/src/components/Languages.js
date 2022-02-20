@@ -22,7 +22,6 @@ export default class Languages extends Component {
     );
     this.setState({ selectedLanguage: resp.data });
     this.openModal();
-    console.log(this.state.selectedLanguage);
   };
 
   openModal = () => this.setState({ isOpen: true });

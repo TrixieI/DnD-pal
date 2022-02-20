@@ -22,7 +22,6 @@ export default class Traits extends Component {
     );
     this.setState({ selectedTrait: trait.data });
     this.openModal();
-    console.log(this.state.trait);
   };
 
   openModal = () => this.setState({ isOpen: true });
