@@ -45,6 +45,7 @@ const db = knex({
 app.post("/register", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
+  const player = req.body.player;
 
   // Check if user exists or not
   const exists = await db("characters")
@@ -62,6 +63,7 @@ app.post("/register", async (req, res) => {
     .insert({
       username: username,
       password: passHash,
+      player: player,
     })
     .then((data) => console.log(data));
   res.json({ created: true });
@@ -72,7 +74,7 @@ app.post("/login", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const userExists = await db("characters")
-    .select("username")
+    .select("*")
     .where("username", username);
   if (userExists.length <= 0) {
     res.json({ exists: false });
@@ -84,7 +86,7 @@ app.post("/login", async (req, res) => {
     if (userExists[0]?.username === undefined) {
       res.json({ msg: "Sorry, this username does not exist" });
     } else if (passHash && username === userExists[0].username) {
-      res.json({ isLoggedin: true, user: username });
+      res.json({ isLoggedin: true, user: username, info: userExists });
       return;
     } else res.json({ msg: "Sorry, incorrect password!" });
     return;
@@ -132,6 +134,7 @@ app.get("/image/:filename", (req, res) => {
     );
 });
 
+// Image deletion
 app.post("/image/:filename", (req, res) => {
   const { filename } = req.params;
   db.select("filename")
@@ -151,4 +154,10 @@ app.post("/image/:filename", (req, res) => {
         .status(404)
         .json({ success: false, message: "not found", stack: err.stack })
     );
+});
+
+// Hall of Fame GET
+app.get("/fame", async (req, res) => {
+  const info = await db.select("username", "player").from("characters");
+  res.json({ data: info });
 });

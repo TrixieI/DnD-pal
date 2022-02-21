@@ -14,6 +14,7 @@ class Login extends React.Component {
       exists: null,
       incorrectPassword: null,
       name: "",
+      player: "",
     };
   }
 
@@ -26,22 +27,36 @@ class Login extends React.Component {
   };
 
   handleLogin = async () => {
-    const data = await axios.post("http://localhost:3001/login", {
-      username: this.state.username,
-      password: this.state.password,
-    });
-    console.log(data);
-    if (data.data.isLoggedin === true) {
-      this.setState({ isLoggedin: true });
-      this.props.login(this.state.isLoggedin);
-      const user = data.data.user;
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("isAuthenticated", true);
+    const { username, password } = this.state;
+    if (username === "" && password === "") {
+      this.setState({ field: true });
       setTimeout(() => {
-        window.location.replace("http://localhost:3000/home");
-      }, 1000);
-    } else if (data.data.exists === false) {
-      this.setState({ exists: false });
+        this.setState({ field: null });
+      }, 5000);
+    } else {
+      const data = await axios.post("http://localhost:3001/login", {
+        username: this.state.username,
+        password: this.state.password,
+        player: this.state.player,
+      });
+      console.log(data.data.info[0]?.player);
+      if (data.data.isLoggedin === true) {
+        this.setState({ isLoggedin: true });
+        this.props.login(this.state.isLoggedin);
+        const user = data.data.user;
+        const player = data.data.info[0]?.player;
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("player", JSON.stringify(player));
+        localStorage.setItem("isAuthenticated", true);
+        setTimeout(() => {
+          window.location.replace("http://localhost:3000/home");
+        }, 1000);
+      } else if (data.data.exists === false) {
+        this.setState({ exists: false });
+        setTimeout(() => {
+          this.setState({ exists: null });
+        }, 5000);
+      }
     }
   };
 
@@ -77,6 +92,11 @@ class Login extends React.Component {
           {this.state.isLoggedin === true ? (
             <Alert variant={"success"}>
               Login successful! logging you in...
+            </Alert>
+          ) : null}
+          {this.state.field === true ? (
+            <Alert variant={"warning"}>
+              Empty input fields are not allowed!!
             </Alert>
           ) : null}
         </div>

@@ -48,7 +48,7 @@ const Upload = () => {
             alt="hero"
           />
         ) : (
-          <p>No avatar image uploaded</p>
+          <p>No avatar image</p>
         )}
       </div>
     </div>

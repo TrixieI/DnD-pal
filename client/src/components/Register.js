@@ -8,28 +8,44 @@ class Register extends React.Component {
     this.state = {
       username: "",
       password: "",
+      player: "",
       exists: null,
       created: null,
+      field: null,
     };
   }
 
-  handleUsername = (e) => {
-    this.setState({ username: e.target.value });
-  };
-
-  handlePassword = (e) => {
-    this.setState({ password: e.target.value });
+  handleUser = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({ [name]: value });
   };
 
   handleRegister = async () => {
-    const data = await axios.post("http://localhost:3001/register", {
-      username: this.state.username,
-      password: this.state.password,
-    });
-    if (data.data.exists === true) {
-      this.setState({ exists: true });
-    } else if (data.data.created === true) {
-      this.setState({ created: true });
+    const { player, username, password } = this.state;
+    if (!player || !username || !password) {
+      this.setState({ field: true });
+      setTimeout(() => {
+        this.setState({ field: null });
+      }, 5000);
+    } else {
+      const data = await axios.post("http://localhost:3001/register", {
+        username: this.state.username,
+        password: this.state.password,
+        player: this.state.player,
+      });
+
+      if (data.data.exists === true) {
+        this.setState({ exists: true });
+        setTimeout(() => {
+          this.setState({ exists: null });
+        }, 5000);
+      } else if (data.data.created === true) {
+        this.setState({ created: true });
+        setTimeout(() => {
+          window.location.replace("http://localhost:3000/");
+        }, 1000);
+      }
     }
   };
 
@@ -41,17 +57,26 @@ class Register extends React.Component {
         </div>
         <div className="register-form">
           <input
-            onChange={this.handleUsername}
+            onChange={this.handleUser}
             name="username"
             type="text"
             placeholder="username..."
           />
           <input
-            onChange={this.handlePassword}
+            onChange={this.handleUser}
             name="password"
             type="password"
             placeholder="password..."
           />
+          <br></br>
+          I'm a...
+          <select defaultValue="1" onChange={this.handleUser} name="player">
+            <option value="1" disabled>
+              Select Type:
+            </option>
+            <option>Adventurer</option>
+            <option>Dungeon Master</option>
+          </select>
           <button onClick={this.handleRegister}>Register</button>
           <p>
             Already have an account?
@@ -60,8 +85,15 @@ class Register extends React.Component {
           {this.state.exists === true ? (
             <Alert variant={"warning"}>User already exists!</Alert>
           ) : null}
+          {this.state.field === true ? (
+            <Alert variant={"warning"}>
+              Empty input fields are not allowed!!
+            </Alert>
+          ) : null}
           {this.state.created === true ? (
-            <Alert variant={"success"}>Success! user created!</Alert>
+            <Alert variant={"success"}>
+              Success! user created! Taking you to the login page...
+            </Alert>
           ) : null}
         </div>
       </>

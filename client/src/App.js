@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import "./App.css";
 import Footer from "./components/Footer";
+import HallOfFame from "./components/HallOfFame";
 
 function App() {
   const isAuthenticated = localStorage.getItem("isAuthenticated");
@@ -27,6 +28,10 @@ function App() {
           <Route
             path="/resources"
             element={isAuthenticated ? <Resources /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/fame"
+            element={isAuthenticated ? <HallOfFame /> : <Navigate to="/" />}
           />
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />

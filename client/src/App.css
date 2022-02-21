@@ -149,3 +149,11 @@ body {
 .btn4:hover {
   color: gold;
 }
+
+.list {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+}

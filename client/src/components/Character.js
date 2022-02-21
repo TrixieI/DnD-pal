@@ -43,6 +43,10 @@ class Character extends React.Component {
       level: this.state.level,
       alignment: this.state.selectedAlignment,
     };
+    if (user.name.length === 0) user.name = "John Doe";
+    if (user.class.length === 0) user.class = "NPC";
+    if (user.level === undefined || null || "N/A") user.level = 1;
+    if (user.alignment.length === 0) user.alignment = "Neutral";
     localStorage.setItem("hero", JSON.stringify(user));
     document.location.reload();
   };
