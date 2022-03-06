@@ -34,12 +34,11 @@ class Login extends React.Component {
         this.setState({ field: null });
       }, 5000);
     } else {
-      const data = await axios.post("http://localhost:3001/login", {
+      const data = await axios.post("https://dndpal.herokuapp.com/login", {
         username: this.state.username,
         password: this.state.password,
         player: this.state.player,
       });
-      console.log(data.data.info[0]?.player);
       if (data.data.isLoggedin === true) {
         this.setState({ isLoggedin: true });
         this.props.login(this.state.isLoggedin);
@@ -49,7 +48,7 @@ class Login extends React.Component {
         localStorage.setItem("player", JSON.stringify(player));
         localStorage.setItem("isAuthenticated", true);
         setTimeout(() => {
-          window.location.replace("http://localhost:3000/home");
+          window.location.replace("https://dndpal.herokuapp.com/home");
         }, 1000);
       } else if (data.data.exists === false) {
         this.setState({ exists: false });

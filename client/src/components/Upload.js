@@ -8,7 +8,7 @@ const Upload = () => {
     e.preventDefault();
     let formData = new FormData();
     formData.append("image", image.data);
-    await fetch("http://localhost:3001/image", {
+    await fetch("https://dndpal.herokuapp.com/image", {
       method: "POST",
       body: formData,
     })
@@ -44,8 +44,8 @@ const Upload = () => {
         {avatar !== null ? (
           <img
             style={{ width: "400px", height: "400px" }}
-            src={`http://localhost:3001/image/${avatar}`}
-            alt="hero"
+            src={`https://dndpal.herokuapp.com/image/${avatar}`}
+            alt="Sadly HEROKU doesn't allow filesystem write so images don't show up, however the code itself is sound"
           />
         ) : (
           <p>No avatar image</p>

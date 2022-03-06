@@ -29,7 +29,7 @@ class Register extends React.Component {
         this.setState({ field: null });
       }, 5000);
     } else {
-      const data = await axios.post("http://localhost:3001/register", {
+      const data = await axios.post("https://dndpal.herokuapp.com/register", {
         username: this.state.username,
         password: this.state.password,
         player: this.state.player,
@@ -43,7 +43,7 @@ class Register extends React.Component {
       } else if (data.data.created === true) {
         this.setState({ created: true });
         setTimeout(() => {
-          window.location.replace("http://localhost:3000/");
+          window.location.replace("https://dndpal.herokuapp.com/");
         }, 1000);
       }
     }

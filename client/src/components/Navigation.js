@@ -6,6 +6,7 @@ const Navigation = (props) => {
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("player");
   };
 
   return (
@@ -17,7 +18,7 @@ const Navigation = (props) => {
             <Nav.Link href="/home">Home</Nav.Link>
             <Nav.Link href="/character">Character</Nav.Link>
             <Nav.Link href="/resources">Resources</Nav.Link>
-            <Nav.Link href="/fame">Hall of Fame</Nav.Link>
+            {/* <Nav.Link href="/fame">Hall of Fame</Nav.Link> */}
             <Nav.Link onClick={handleLogout} href="/">
               Logout
             </Nav.Link>

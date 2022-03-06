@@ -54,7 +54,7 @@ class Character extends React.Component {
   handleDeleteCharacter = async () => {
     const avatar = JSON.parse(localStorage.getItem("avatar"));
     if (avatar) {
-      await axios.post(`http://localhost:3001/image/${avatar}`);
+      // await axios.post(`https://dndpal.herokuapp.com/image/${avatar}`);
       localStorage.removeItem("hero");
       localStorage.removeItem("avatar");
       document.location.reload();

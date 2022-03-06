@@ -16,6 +16,12 @@ app.use(cors());
 app.use(morgan("dev"));
 app.listen(port, () => console.log(`Server live on port: ${port}!`));
 
+app.use(express.static(path.join(__dirname, "build")));
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
+
 const imageUpload = multer({
   dest: "images",
   fileFilter: function (req, file, callback) {
@@ -38,6 +44,7 @@ const db = knex({
     user: process.env.USERDB,
     password: process.env.PASSWORDDB,
     database: process.env.DATABASEDB,
+    ssl: { rejectUnauthorized: false },
   },
 });
 
@@ -122,7 +129,8 @@ app.get("/image/:filename", (req, res) => {
     .then((images) => {
       if (images[0]) {
         const dirname = path.resolve();
-        const fullfilepath = path.join(dirname, images[0].filepath);
+        // const fullfilepath = path.join(dirname, images[0].filepath);
+        const fullfilepath = `images/${filename}`;
         return res.type(images[0].mimetype).sendFile(fullfilepath);
       }
       return Promise.reject(new Error("Image does not exist"));
@@ -143,7 +151,7 @@ app.post("/image/:filename", (req, res) => {
     .del()
     .then((images) => {
       if (filename) {
-        const fullfilepath = `./images/${filename}`;
+        const fullfilepath = `images/${filename}`;
         fs.unlinkSync(fullfilepath);
       }
       res.json({ msg: "removed successfully" });

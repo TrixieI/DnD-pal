@@ -10,9 +10,8 @@ const HallOfFame = () => {
   const [data, setData] = useState([]);
 
   const characters = async () => {
-    const data = await axios.get("http://localhost:3001/fame");
+    const data = await axios.get("https://dndpal.herokuapp.com/fame");
     setData(data.data.data);
-    console.log(data.data.data);
   };
 
   return (
