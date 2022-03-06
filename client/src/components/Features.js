@@ -36,7 +36,7 @@ export default class Features extends Component {
   render() {
     return (
       <div className="info">
-        <h1>Spells</h1>
+        <h1>Features</h1>
         <div>
           <input
             onChange={this.handleChange}
