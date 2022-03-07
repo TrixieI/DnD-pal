@@ -16,12 +16,14 @@ app.use(cors());
 app.use(morgan("dev"));
 app.listen(port, () => console.log(`Server live on port: ${port}!`));
 
+// Send the static HTML file from the build folder
 app.use(express.static(path.join(__dirname, "build")));
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
+// Multer image upload - Only images
 const imageUpload = multer({
   dest: "images",
   fileFilter: function (req, file, callback) {
@@ -36,6 +38,7 @@ const imageUpload = multer({
   },
 });
 
+// KNEX PostgreSQL Database connection with .env on Heroku
 const db = knex({
   client: process.env.CLIENTDB,
   connection: {
@@ -63,6 +66,7 @@ app.post("/register", async (req, res) => {
     return;
   }
 
+  // Using Bcrypt to hash user password
   const passHash = bcrypt.hashSync(password, 10);
 
   db("characters")
@@ -76,6 +80,7 @@ app.post("/register", async (req, res) => {
   res.json({ created: true });
   return;
 });
+
 // Login
 app.post("/login", async (req, res) => {
   const username = req.body.username;
@@ -129,6 +134,7 @@ app.get("/image/:filename", (req, res) => {
     .then((images) => {
       if (images[0]) {
         const dirname = path.resolve();
+        //? Has to be disabled until a workaround for Heroku FS is in-place
         // const fullfilepath = path.join(dirname, images[0].filepath);
         const fullfilepath = `images/${filename}`;
         return res.type(images[0].mimetype).sendFile(fullfilepath);

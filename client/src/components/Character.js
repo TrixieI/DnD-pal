@@ -54,6 +54,7 @@ class Character extends React.Component {
   handleDeleteCharacter = async () => {
     const avatar = JSON.parse(localStorage.getItem("avatar"));
     if (avatar) {
+      //? Heroku doesn't allow writing to FS so this is disabled until a workaround is in-place?
       // await axios.post(`https://dndpal.herokuapp.com/image/${avatar}`);
       localStorage.removeItem("hero");
       localStorage.removeItem("avatar");
