@@ -94,6 +94,8 @@ app.post("/login", async (req, res) => {
     const userPassword = await db("characters")
       .select("password")
       .where("username", username);
+    // Using Bcrypt's compare function to compare input password to hashed password
+    // That's saved on the DB
     const passHash = bcrypt.compareSync(password, userPassword[0]?.password);
     if (userExists[0]?.username === undefined) {
       res.json({ msg: "Sorry, this username does not exist" });
@@ -148,7 +150,7 @@ app.get("/image/:filename", (req, res) => {
     );
 });
 
-// Image deletion
+// Image deletion from server and database
 app.post("/image/:filename", (req, res) => {
   const { filename } = req.params;
   db.select("filename")
@@ -170,7 +172,7 @@ app.post("/image/:filename", (req, res) => {
     );
 });
 
-// Hall of Fame GET
+//! Hall of Fame GET - currently not working on front end need to fix
 app.get("/fame", async (req, res) => {
   const info = await db.select("username", "player").from("characters");
   res.json({ data: info });
