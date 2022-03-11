@@ -3,6 +3,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { login } from "../actions";
 import { Alert } from "react-bootstrap";
+import "../App.css";
 
 class Login extends React.Component {
   constructor() {
@@ -67,18 +68,22 @@ class Login extends React.Component {
         </div>
         <div className="login-form">
           <input
+            id="login"
             onChange={this.handleUsername}
             name="username"
             type="text"
             placeholder="username..."
           />
           <input
+            id="login"
             onChange={this.handlePassword}
             name="password"
             type="password"
             placeholder="password..."
           />
-          <button onClick={this.handleLogin}>Login</button>
+          <button id="btn5" onClick={this.handleLogin}>
+            Login
+          </button>
           <p>
             Don't have an account?
             <a href="/register">Click HERE to Register</a>

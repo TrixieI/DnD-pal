@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Alert } from "react-bootstrap";
+import "../App.css";
 
 class Register extends React.Component {
   constructor() {
@@ -57,12 +58,14 @@ class Register extends React.Component {
         </div>
         <div className="register-form">
           <input
+            id="register"
             onChange={this.handleUser}
             name="username"
             type="text"
             placeholder="username..."
           />
           <input
+            id="register"
             onChange={this.handleUser}
             name="password"
             type="password"
@@ -77,7 +80,9 @@ class Register extends React.Component {
             <option>Adventurer</option>
             <option>Dungeon Master</option>
           </select>
-          <button onClick={this.handleRegister}>Register</button>
+          <button id="btn5" onClick={this.handleRegister}>
+            Register
+          </button>
           <p>
             Already have an account?
             <a href="/">Click HERE to Login</a>
