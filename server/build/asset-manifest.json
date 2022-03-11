@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.67e82aae.css",
-    "main.js": "/static/js/main.7785379a.js",
+    "main.css": "/static/css/main.2e4f6363.css",
+    "main.js": "/static/js/main.e44ea29f.js",
     "static/media/candle-bg.jpeg": "/static/media/candle-bg.cb861ddcb7a509c25ff7.jpeg",
     "static/media/fog-1.png": "/static/media/fog-1.f941d9347efb2a3e7d1d.png",
     "static/media/fog-2.png": "/static/media/fog-2.8aeda6af6c952275e3de.png",
     "index.html": "/index.html",
-    "main.67e82aae.css.map": "/static/css/main.67e82aae.css.map",
-    "main.7785379a.js.map": "/static/js/main.7785379a.js.map"
+    "main.2e4f6363.css.map": "/static/css/main.2e4f6363.css.map",
+    "main.e44ea29f.js.map": "/static/js/main.e44ea29f.js.map"
   },
   "entrypoints": [
-    "static/css/main.67e82aae.css",
-    "static/js/main.7785379a.js"
+    "static/css/main.2e4f6363.css",
+    "static/js/main.e44ea29f.js"
   ]
 }

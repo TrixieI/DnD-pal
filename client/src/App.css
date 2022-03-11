@@ -161,6 +161,10 @@ body {
   font-weight: 400;
   box-sizing: border-box;
   border: 1px solid rgb(0, 120, 212);
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
 }
 
 .btn5:hover {

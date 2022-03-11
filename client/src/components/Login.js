@@ -33,7 +33,7 @@ class Login extends React.Component {
       this.setState({ field: true });
       setTimeout(() => {
         this.setState({ field: null });
-      }, 5000);
+      }, 2000);
     } else {
       const data = await axios.post("https://dndpal.herokuapp.com/login", {
         username: this.state.username,
@@ -55,7 +55,7 @@ class Login extends React.Component {
         this.setState({ exists: false });
         setTimeout(() => {
           this.setState({ exists: null });
-        }, 5000);
+        }, 2000);
       }
     }
   };
@@ -68,20 +68,20 @@ class Login extends React.Component {
         </div>
         <div className="login-form">
           <input
-            id="login"
+            className="login"
             onChange={this.handleUsername}
             name="username"
             type="text"
             placeholder="username..."
           />
           <input
-            id="login"
+            className="login"
             onChange={this.handlePassword}
             name="password"
             type="password"
             placeholder="password..."
           />
-          <button id="btn5" onClick={this.handleLogin}>
+          <button className="btn5" onClick={this.handleLogin}>
             Login
           </button>
           <p>

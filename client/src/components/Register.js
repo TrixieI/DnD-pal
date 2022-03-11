@@ -28,7 +28,7 @@ class Register extends React.Component {
       this.setState({ field: true });
       setTimeout(() => {
         this.setState({ field: null });
-      }, 5000);
+      }, 2000);
     } else {
       const data = await axios.post("https://dndpal.herokuapp.com/register", {
         username: this.state.username,
@@ -40,7 +40,7 @@ class Register extends React.Component {
         this.setState({ exists: true });
         setTimeout(() => {
           this.setState({ exists: null });
-        }, 5000);
+        }, 3000);
       } else if (data.data.created === true) {
         this.setState({ created: true });
         setTimeout(() => {
@@ -58,14 +58,14 @@ class Register extends React.Component {
         </div>
         <div className="register-form">
           <input
-            id="register"
+            className="register"
             onChange={this.handleUser}
             name="username"
             type="text"
             placeholder="username..."
           />
           <input
-            id="register"
+            className="register"
             onChange={this.handleUser}
             name="password"
             type="password"
@@ -80,7 +80,7 @@ class Register extends React.Component {
             <option>Adventurer</option>
             <option>Dungeon Master</option>
           </select>
-          <button id="btn5" onClick={this.handleRegister}>
+          <button className="btn5" onClick={this.handleRegister}>
             Register
           </button>
           <p>
@@ -88,11 +88,13 @@ class Register extends React.Component {
             <a href="/">Click HERE to Login</a>
           </p>
           {this.state.exists === true ? (
-            <Alert variant={"warning"}>User already exists!</Alert>
+            <Alert variant={"danger"}>
+              User already exists! Please try a different Username!
+            </Alert>
           ) : null}
           {this.state.field === true ? (
             <Alert variant={"warning"}>
-              Empty input fields are not allowed!!
+              Empty input fields are not allowed!
             </Alert>
           ) : null}
           {this.state.created === true ? (
